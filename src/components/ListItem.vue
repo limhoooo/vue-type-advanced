@@ -52,9 +52,9 @@ export default Vue.extend({
     },
   },
   computed: {
-    // listItems() {
-    //   return this.$store.getters.fetchedList;
-    // },
+    listItems() {
+      return this.$store.getters.fetchedNews;
+    },
   },
 });
 </script>
