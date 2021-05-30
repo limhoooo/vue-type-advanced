@@ -3,7 +3,7 @@ import VueRouter, { NavigationGuardNext, Route } from 'vue-router';
 import { ItemView, UserView } from '../views';
 import createListView from '../views/CreateListView';
 import bus from '../utils/bus';
-import store from '../store/index.js';
+import store from '../store/index';
 
 Vue.use(VueRouter);
 
@@ -12,7 +12,7 @@ export default new VueRouter({
   routes: [
     {
       path: '/',
-      redirect: '/news' 
+      redirect: '/news'
     },
     {
       path: '/news',
@@ -20,12 +20,13 @@ export default new VueRouter({
       component: createListView('NewsView'),
       async beforeEnter(routeTo: Route, routeFrom: Route, next: NavigationGuardNext<Vue>) {
         bus.$emit('on:progress');
-        try {
-          await store.dispatch('FETCH_LIST', routeTo.name);
-          next(); 
-        } catch (error) {
-          new Error('failed to fetch news items')         
-        }
+        // try {
+        //   await store.dispatch('FETCH_LIST', routeTo.name);
+        //   next(); 
+        // } catch (error) {
+        //   new Error('failed to fetch news items')         
+        // }
+        next();
       },
     },
     {

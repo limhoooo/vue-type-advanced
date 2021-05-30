@@ -2,17 +2,19 @@
   <div id="app">
     <spinner :loading="loading"></spinner>
     <tool-bar></tool-bar>
-    <transition name='routing-fade' mode="out-in">
+    <transition name="routing-fade" mode="out-in">
       <router-view></router-view>
     </transition>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import ToolBar from './components/ToolBar.vue';
-import Spinner from './components/Spinner.vue';
-import bus from './utils/bus';
+import Vue from "vue";
+import ToolBar from "./components/ToolBar.vue";
+import Spinner from "./components/Spinner.vue";
+import bus from "./utils/bus";
+import { MutationTypes } from "./store/mutations";
+import { ActionTypes } from "./store/actions";
 
 export default Vue.extend({
   components: {
@@ -22,7 +24,7 @@ export default Vue.extend({
   data() {
     return {
       loading: false,
-    }
+    };
   },
   methods: {
     onProgress() {
@@ -30,13 +32,15 @@ export default Vue.extend({
     },
     offProgress() {
       this.loading = false;
-    }
+    },
   },
-  created() {
-    bus.$on('on:progress', this.onProgress);
-    bus.$on('off:progress', this.offProgress);
-  }
-})
+  async created() {
+    //this.$store.commit(MutationTypes.SET_NEWS, 10)
+    const response = await this.$store.dispatch(ActionTypes.FETCH_NEWS);
+    bus.$on("on:progress", this.onProgress);
+    bus.$on("off:progress", this.offProgress);
+  },
+});
 </script>
 
 <style>
@@ -57,8 +61,9 @@ a.router-link-active {
 }
 
 /* Router Transition */
-.routing-fade-enter-active, .routing-fade-leave-active {
-  transition: opacity .3s ease;
+.routing-fade-enter-active,
+.routing-fade-leave-active {
+  transition: opacity 0.3s ease;
 }
 .routing-fade-enter, .routing-fade-leave-to
 /* .routing-fade-leave-active below version 2.1.8 */ {
