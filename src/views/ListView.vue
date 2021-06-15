@@ -1,6 +1,6 @@
 <template>
   <div>
-    <list-item :listItems="newsItems"></list-item>
+    <list-item listItems="newsItems"></list-item>
   </div>
 </template>
 
