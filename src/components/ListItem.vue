@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { NewsItem } from "@/api";
+import { NewsItem } from "../api/index";
 import Vue, { PropType } from "vue";
 export default Vue.extend({
   props: {
@@ -52,9 +52,9 @@ export default Vue.extend({
     },
   },
   computed: {
-    listItems() {
-      return this.$store.getters.fetchedNews;
-    },
+    // listItems(): NewsItem[] {
+    //   return this.$store.getters.fetchedNews;
+    // },
   },
 });
 </script>
